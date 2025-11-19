@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>網站目錄</title>
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-LLVG81R9TJ"></script>
 <script>
@@ -13,34 +10,379 @@
 
   gtag('config', 'G-LLVG81R9TJ');
 </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四鞠編年史 | 2013-</title>
+    <meta name="description" content="SNH48 林思意 & 鞠婧禕 編年史索引">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #1a202c;
-            color: #e2e8f0;
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+        /* 定義應援色變數 (柔和版) */
+        :root {
+            --color-n-purple: #c4b5fd; 
+            --color-kiku-blue: #bfdbfe; 
+            --color-sisi-green: #bbf7d0;
+            /* 預設背景漸層 */
+            --bg-gradient: linear-gradient(135deg, #f3e8ff 0%, #e0f2fe 50%, #dcfce7 100%);
         }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f3e8ff;
+            min-height: 100vh;
+        }
+
+        /* 全域背景圖片容器 */
+        #global-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        #global-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        #global-bg .fallback-gradient {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-gradient);
+            z-index: -2;
+        }
+
+        .serif-font {
+            font-family: 'Noto Serif TC', serif;
+        }
+
+        /* 卡片基礎樣式 */
+        .chapter-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: white;
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+        
+        .chapter-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-color: var(--color-kiku-blue);
+            z-index: 10;
+        }
+
+        /* 圖片容器 */
+        .card-image-container {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-color: #2d2a32; /* 深色背景 */
+        }
+
+        .card-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            object-position: center;
+            /* 移除原本的 transition，改用 animation 控制 */
+            will-change: transform; 
+        }
+
+        /* 定義緩慢放大動畫：3秒內從 1.0 放大到 1.15 */
+        @keyframes slowZoom {
+            0% { transform: scale(1.0); }
+            100% { transform: scale(1.15); }
+        }
+
+        /* 動畫類別 */
+        .zoom-animate {
+            animation: slowZoom 3s linear forwards;
+        }
+
+        /* 當有圖片時的樣式修正 */
+        .has-image .card-content {
+            background: none !important;
+        }
+        
+        .has-image .chapter-num {
+            color: rgba(255,255,255,0.95) !important;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9); 
+        }
+
+        /* 中央內容區塊淡化效果 */
+        .content-wrapper {
+            background-color: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.5);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
     </style>
 </head>
-<body class="p-6 md:p-12">
-    <div class="max-w-4xl mx-auto bg-gray-800 rounded-xl shadow-lg p-6 md:p-10">
-        <h1 class="text-3xl md:text-4xl font-bold mb-6 text-center text-teal-400">四鞠編年史</h1>
-        <p class="text-lg text-center mb-8 text-gray-400">點擊下方連結以瀏覽不同的頁面。也可透過網頁上下方分頁跳轉</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 迴圈生成 1.html 到 11.html 的連結 -->
-            <script>
-                const linksContainer = document.querySelector('.grid');
-                for (let i = 1; i <= 11; i++) {
-                    const linkItem = document.createElement('a');
-                    linkItem.href = `${i}_offline.html`;
-                    linkItem.className = 'block p-6 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors duration-300 transform hover:scale-105';
-                    linkItem.innerHTML = `<h2 class="text-xl font-semibold mb-2 text-blue-300">第 ${i} 頁</h2>`;
-                    linksContainer.appendChild(linkItem);
-                }
-            </script>
-        </div>
+<body class="text-gray-600 antialiased">
+
+    <div id="global-bg">
+        <div class="fallback-gradient"></div>
+        <img src="images/background.jpg" alt="Background" onerror="this.style.display='none'">
     </div>
+
+    <div class="max-w-6xl mx-auto content-wrapper shadow-2xl">
+        
+        <!-- Hero Header -->
+        <header class="bg-white/50 backdrop-blur-sm border-b border-purple-100/50 sticky top-0 z-50">
+            <div class="px-4 py-3 sm:px-6 lg:px-8 flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-full overflow-hidden shadow-inner bg-gradient-to-br from-purple-200 to-blue-200 flex items-center justify-center relative group">
+                        <img src="images/header.jpg" alt="Header Icon" class="w-full h-full object-cover absolute inset-0 z-10" onerror="this.style.display='none'">
+                        <span class="text-purple-600 font-bold serif-font text-xl relative z-0">四</span>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800 tracking-tight serif-font">四鞠編年史</h1>
+                        <div class="flex items-center space-x-2 text-xs font-medium mt-0.5">
+                            <span class="text-purple-400">2013-</span>
+                            <span class="w-1 h-1 rounded-full bg-gray-300"></span>
+                            <span class="text-blue-400">SNH48</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex space-x-1.5">
+                    <div class="w-3 h-3 rounded-full bg-green-200"></div>
+                    <div class="w-3 h-3 rounded-full bg-blue-200"></div>
+                    <div class="w-3 h-3 rounded-full bg-purple-200"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Grid Content -->
+        <main class="flex-grow py-10 px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-10">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-3 serif-font">
+                    四鞠過往的點點滴滴
+                </h2>
+                <p class="text-gray-500 text-sm sm:text-base leading-relaxed">
+                    請點擊下方章節進行閱讀，也可透過網頁上下方分頁跳轉
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="card-grid">
+                
+                <!-- Card 1 -->
+                <a href="1_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="1">
+                    <div class="card-image-container"><img src="" alt="Chapter 1" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-purple-200/80 font-mono transition-colors">01</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 2 -->
+                <a href="2_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="2">
+                    <div class="card-image-container"><img src="" alt="Chapter 2" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-blue-200/80 font-mono transition-colors">02</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 3 -->
+                <a href="3_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="3">
+                    <div class="card-image-container"><img src="" alt="Chapter 3" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-green-200/80 font-mono transition-colors">03</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 4 -->
+                <a href="4_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="4">
+                    <div class="card-image-container"><img src="" alt="Chapter 4" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-purple-200/80 font-mono transition-colors">04</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 5 -->
+                <a href="5_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="5">
+                    <div class="card-image-container"><img src="" alt="Chapter 5" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-blue-200/80 font-mono transition-colors">05</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 6 -->
+                <a href="6_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="6">
+                    <div class="card-image-container"><img src="" alt="Chapter 6" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-green-200/80 font-mono transition-colors">06</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 7 -->
+                <a href="7_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="7">
+                    <div class="card-image-container"><img src="" alt="Chapter 7" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-purple-200/80 font-mono transition-colors">07</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 8 -->
+                <a href="8_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="8">
+                    <div class="card-image-container"><img src="" alt="Chapter 8" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-blue-200/80 font-mono transition-colors">08</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 9 -->
+                <a href="9_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="9">
+                    <div class="card-image-container"><img src="" alt="Chapter 9" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-green-200/80 font-mono transition-colors">09</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 10 -->
+                <a href="10_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="10">
+                    <div class="card-image-container"><img src="" alt="Chapter 10" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-purple-200/80 font-mono transition-colors">10</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Card 11 -->
+                <a href="11_offline.html" class="chapter-card relative h-64 rounded-xl p-6 flex flex-col justify-between overflow-hidden group" data-chapter="11">
+                    <div class="card-image-container"><img src="" alt="Chapter 11" data-index="1"></div>
+                    <div class="card-content relative z-10 h-full flex flex-col justify-between transition-colors duration-300 pointer-events-none">
+                        <div class="flex justify-between items-start">
+                            <span class="chapter-num text-5xl font-bold text-blue-200/80 font-mono transition-colors">11</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white/60 border-t border-white/50 backdrop-blur-md mt-auto">
+            <div class="px-4 py-6 flex justify-center items-center">
+                <div class="flex items-center text-gray-600 hover:text-gray-800 transition-colors">
+                    <i class="fab fa-weibo text-xl text-red-500/70 mr-2"></i>
+                    <span class="font-bold text-lg tracking-widest flex items-center space-x-[-2px]">
+                        <a href="https://www.weibo.com/u/3675865547" target="_blank" class="hover:text-green-500 transition-colors px-0.5">四</a>
+                        <a href="https://www.weibo.com/u/3669102477" target="_blank" class="hover:text-blue-500 transition-colors px-0.5">鞠</a>
+                    </span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.chapter-card');
+            
+            cards.forEach(card => {
+                const chapter = card.getAttribute('data-chapter');
+                const imgContainer = card.querySelector('.card-image-container');
+                const img = imgContainer.querySelector('img');
+                let imageInterval;
+                let currentImageIndex = 1;
+                const maxImages = 10;
+
+                // 初始化：嘗試載入第一張圖片
+                const initialSrc = `images/${chapter}-1.jpg`;
+                img.src = initialSrc;
+
+                img.onload = function() {
+                    imgContainer.style.opacity = '1';
+                    card.classList.add('has-image');
+                };
+
+                img.onerror = function() {
+                    if (currentImageIndex > 1) {
+                        currentImageIndex = 1;
+                        this.src = `images/${chapter}-1.jpg`;
+                    } else {
+                        imgContainer.style.opacity = '0';
+                        card.classList.remove('has-image');
+                    }
+                };
+
+                // 滑鼠懸停事件
+                card.addEventListener('mouseenter', () => {
+                    if (card.classList.contains('has-image')) {
+                        // 1. 立即為當前圖片添加動畫
+                        img.classList.add('zoom-animate');
+
+                        if(imageInterval) clearInterval(imageInterval);
+                        
+                        imageInterval = setInterval(() => {
+                            // 2. 在切換圖片前，先移除動畫 class 並強制重繪 (Reflow)
+                            // 這樣做是為了讓 CSS 動畫能被重置，而不是一直停留在 100% 狀態
+                            img.classList.remove('zoom-animate');
+                            void img.offsetWidth; // 觸發重繪
+
+                            // 3. 切換圖片索引
+                            currentImageIndex++;
+                            if (currentImageIndex > maxImages) {
+                                currentImageIndex = 1;
+                            }
+                            img.src = `images/${chapter}-${currentImageIndex}.jpg`;
+                            
+                            // 4. 重新添加動畫 class，讓新圖片從 1.0 開始放大
+                            img.classList.add('zoom-animate');
+
+                        }, 3000); // 3秒切換一次
+                    }
+                });
+
+                // 滑鼠離開事件
+                card.addEventListener('mouseleave', () => {
+                    if (imageInterval) {
+                        clearInterval(imageInterval);
+                        imageInterval = null;
+                    }
+                    // 移除動畫 class
+                    img.classList.remove('zoom-animate');
+                    
+                    // 重置回第一張
+                    currentImageIndex = 1;
+                    if (card.classList.contains('has-image')) {
+                        img.src = `images/${chapter}-1.jpg`;
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
-
-
